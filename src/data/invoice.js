@@ -6,7 +6,7 @@ export const invoice = {
     lastName: "Doe",
     address: {
       country: "USA",
-      city: "San Francisco",
+      city: " San Francisco",
       street: "One Street",
       number: 12,
     },
@@ -17,19 +17,22 @@ export const invoice = {
   },
   items: [
     {
+      id: 1,
       product: "CPU",
       price: 499,
       quantity: 1,
     },
     {
+      id: 2,
       product: "Corsair Keyboard Mecanico",
       price: 150,
       quantity: 1,
     },
     {
+      id: 3,
       product: "Monitor Asus",
       price: 350,
       quantity: 1,
-    }
-  ]
-}
+    },
+  ],
+};
