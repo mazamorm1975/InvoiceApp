@@ -1,45 +1,30 @@
 import { getInvoice } from "../services/getInvoice";
+import { ClientView } from "./ClienteView";
+import { CompanyView } from "./CompanyView";
+import { InvoiceView } from "./InvoiceView";
 
 export const InvoiceApp = () => {
   const { id, name, client, company, items } = getInvoice();
-  const { name: nameClient, lastName, address } = client;
-  const { country, city, street, number } = address;
-
+  
   return (
     <>
       <div className="container">
         <div className="card my-3">
-          <div className="card-header">Modulo De Facturación</div>
+          
+          <div className="card-header"><h2>Modulo De Facturación</h2></div>
+          
           <div className="card-body">
-            <ul className="list-group">
-              <li className="list-group-item">{id}</li>
-              <li className="list-group-item">{name}</li>
-            </ul>
-
-            <div className="row my-3">
+            <InvoiceView id={id} name={name}/>
+          <div className="row my-3">
+          
               <div className="col">
-                <h3>Datos Del Cliente</h3>
-                <ul className="list-group">
-                  <li className="list-group-item active">{nameClient}</li>
-                  <li className="list-group-item">{lastName}</li>
-                </ul>
-                <h3>Dirección Del Cliente</h3>
-                <ul className="list-group">
-                  <li className="list-group-item">
-                    Pais: {country} Ciudad: {city}
-                  </li>
-                  <li className="list-group-item">
-                    Calle: {street} Numero Exterior: {number}{" "}
-                  </li>
-                </ul>
+              <ClientView titleClient= "Datos Del Cliente" client={client}/>
+               
               </div>
 
               <div className="col">
-                <h3>Datos De La Compañia</h3>
-                <ul className="list-group">
-                  <li className="list-group-item active">{company.name}</li>
-                  <li className="list-group-item">{company.fiscalNumber}</li>
-                </ul>
+                <CompanyView titleCompany="Datos De La compañia" company={company}/>
+
               </div>
             </div>
 
