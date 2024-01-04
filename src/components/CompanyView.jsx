@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
 
 export const CompanyView=({titleCompany, company}) => {
     const {name, fiscalNumber} = company;
@@ -12,4 +13,9 @@ export const CompanyView=({titleCompany, company}) => {
              
         </>
     )
+}
+
+CompanyView.propTypes = {
+  titleCompany: PropTypes.string.isRequired,
+  company: PropTypes.object.isRequired,
 }

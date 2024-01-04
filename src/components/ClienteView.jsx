@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-
+import PropTypes from "prop-types";
 // eslint-disable-next-line react/prop-types
 export const ClientView = ({ titleClient, client, titleAddress }) => {
   const { name: nameClient, lastName, address } = client;
-  const { country, city, street, number } = address;
+  const { country, city, street, number, } = address;
 
   return (
     <>
@@ -23,4 +23,10 @@ export const ClientView = ({ titleClient, client, titleAddress }) => {
       </ul>
     </>
   );
+};
+
+ClientView.propTypes = {
+  titleClient: PropTypes.string.isRequired,
+  client: PropTypes.object.isRequired,
+  titleAddress: PropTypes.string.isRequired,
 };

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
-
+import PropTypes from 'prop-types';
 import { ProductItemView } from "./ProductItemV.iew";
 
 // eslint-disable-next-line no-unused-vars
@@ -30,3 +30,8 @@ export const ListItemView = ({ title, items }) => {
     </>
   );
 };
+
+ListItemView.propTypes = {
+  title: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
+}
