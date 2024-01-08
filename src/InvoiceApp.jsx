@@ -1,8 +1,8 @@
-import { getInvoice } from "../services/getInvoice";
-import { ClientView } from "./ClienteView";
-import { CompanyView } from "./CompanyView";
-import { InvoiceView } from "./InvoiceView";
-import { ListItemView } from "./ListItemView";
+import { getInvoice } from "./services/getInvoice";
+import { ClientView } from "./components/ClienteView";
+import { CompanyView } from "./components/CompanyView";
+import { InvoiceView } from "./components/InvoiceView";
+import { ListItemView } from "./components/ListItemView";
 
 export const InvoiceApp = () => {
   const { id, name, client, company, items } = getInvoice();
