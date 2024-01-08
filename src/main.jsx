@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {InvoiceApp} from './components/InvoiceApp'
+import { InvoiceApp } from "./InvoiceApp";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <InvoiceApp/>
+    <InvoiceApp />
   </React.StrictMode>
 );
