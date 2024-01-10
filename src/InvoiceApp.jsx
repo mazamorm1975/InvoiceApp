@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getInvoice } from "./services/getInvoice";
 import { ClientView } from "./components/ClienteView";
 import { CompanyView } from "./components/CompanyView";
@@ -6,7 +7,19 @@ import { ListItemView } from "./components/ListItemView";
 import { TotalView } from "./components/TotalView";
 
 export const InvoiceApp = () => {
-  const { total, id, name, client, company, items } = getInvoice();
+  const {
+    total,
+    id,
+    name,
+    client,
+    company,
+    items: itemsInitial,
+  } = getInvoice();
+
+  const [productValue, setProduct] = useState("");
+  const [priceValue, setPrice] = useState(0);
+  const [quantityValue, setQuantity] = useState(0);
+  const [items, setItems] = useState(itemsInitial);
 
   return (
     <>
@@ -36,7 +49,21 @@ export const InvoiceApp = () => {
             </div>
             <ListItemView title="Productos De la Factura" items={items} />
             <TotalView total={total} />
-            <form>
+
+            <form className="w-50"
+              onSubmit={(event) => {
+                event.preventDefault();
+                setItems([
+                  ...items,
+                  {
+                    key: 4,
+                    product: productValue,
+                    price: priceValue,
+                    quantity: quantityValue,
+                  },
+                ]);
+              }}
+            >
               <input
                 type="text"
                 name="product"
@@ -44,6 +71,7 @@ export const InvoiceApp = () => {
                 className="form-control m-3"
                 onChange={(event) => {
                   console.log(event.target.value);
+                  setProduct(event.target.value);
                 }}
               />
 
@@ -54,6 +82,7 @@ export const InvoiceApp = () => {
                 className="form-control m-3"
                 onChange={(event) => {
                   console.log(event.target.value);
+                  setPrice(event.target.value);
                 }}
               />
 
@@ -64,8 +93,12 @@ export const InvoiceApp = () => {
                 className="form-control m-3"
                 onChange={(event) => {
                   console.log(event.target.value);
+                  setQuantity(event.target.value);
                 }}
               />
+              <button type="submit" className="btn btn-primary w-100">
+                Enviar Registro
+              </button>
             </form>
           </div>
         </div>
