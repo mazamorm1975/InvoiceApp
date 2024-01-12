@@ -17,9 +17,10 @@ export const InvoiceApp = () => {
   } = getInvoice();
 
   const [productValue, setProduct] = useState("");
-  const [priceValue, setPrice] = useState(0);
-  const [quantityValue, setQuantity] = useState(0);
+  const [priceValue, setPrice] = useState("");
+  const [quantityValue, setQuantity] = useState("");
   const [items, setItems] = useState(itemsInitial);
+  const [counter, setCounter] = useState(4);
 
   return (
     <>
@@ -50,23 +51,33 @@ export const InvoiceApp = () => {
             <ListItemView title="Productos De la Factura" items={items} />
             <TotalView total={total} />
 
-            <form className="w-50"
+            <form
+              className="w-50"
               onSubmit={(event) => {
                 event.preventDefault();
+
+                //Se validan espacios en blanco a la entrada de datos en el formulario
+                if (productValue.trim().length <= 1) return;
+                if (priceValue.trim().length <= 1) return;
+                if (quantityValue.trim().length < 1) return;
+
                 setItems([
                   ...items,
                   {
-                    key: 4,
+                    id: counter,
                     product: productValue,
-                    price: priceValue,
-                    quantity: quantityValue,
+                    price: parseInt(priceValue, 10),
+                    quantity: parseInt(quantityValue, 10),
                   },
                 ]);
+                setProduct(""), setPrice(""), setQuantity("");
+                setCounter(counter + 1);
               }}
             >
               <input
                 type="text"
                 name="product"
+                value={productValue}
                 placeholder="Producto"
                 className="form-control m-3"
                 onChange={(event) => {
@@ -78,6 +89,7 @@ export const InvoiceApp = () => {
               <input
                 type="text m-3"
                 name="price"
+                value={priceValue}
                 placeholder="Precio"
                 className="form-control m-3"
                 onChange={(event) => {
@@ -89,6 +101,7 @@ export const InvoiceApp = () => {
               <input
                 type="text"
                 name="quantity"
+                value={quantityValue}
                 placeholder="Cantidad"
                 className="form-control m-3"
                 onChange={(event) => {
