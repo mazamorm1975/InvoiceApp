@@ -57,17 +57,38 @@ export const InvoiceApp = () => {
                 event.preventDefault();
 
                 //Se validan espacios en blanco a la entrada de datos en el formulario
-                if (productValue.trim().length <= 1) return;
-                if (priceValue.trim().length <= 1) return;
-                if (quantityValue.trim().length < 1) return;
+                if (productValue.trim().length <= 1){
+                  alert('Error: Se requiere la descripción del producto');   
+                  return;
+                } 
+
+                if(!isNaN(productValue.trim())){
+                  alert('Error: El campo NO es numerico.');
+                  return;
+                }
+
+                if (priceValue.trim().length <= 1) return;                  
+
+                if (isNaN(priceValue.trim())) {
+                  alert("Error: No se recibio un valor númerico");
+                  return;
+                }
+                if (quantityValue.trim().length < 1) {
+                  alert("Error: Se requiere por lo menos un articulo");
+                  return;
+                }
+                if (isNaN(quantityValue.trim())) {
+                  alert("Error: No se recibio un número");
+                  return;
+                }
 
                 setItems([
                   ...items,
                   {
                     id: counter,
-                    product: productValue,
-                    price: parseInt(priceValue, 10),
-                    quantity: parseInt(quantityValue, 10),
+                    product: productValue.trim(),
+                    price: parseInt(priceValue.trim(), 10),
+                    quantity: parseInt(quantityValue.trim(), 10),
                   },
                 ]);
                 setProduct(""), setPrice(""), setQuantity("");
