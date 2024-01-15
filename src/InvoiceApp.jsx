@@ -21,6 +21,64 @@ export const InvoiceApp = () => {
   const [quantityValue, setQuantity] = useState("");
   const [items, setItems] = useState(itemsInitial);
   const [counter, setCounter] = useState(4);
+  
+  const onProductChange= ({target}) => {
+    console.log(target.value);
+    setProduct(target.value);
+  }
+
+  const onPriceChange = ({target}) => {
+    console.log(target.value);
+    setPrice(target.value);
+  }
+
+  const onQuantityChange = ({target}) => {
+    console.log(target.value);
+    setQuantity(target.value);
+  }
+
+  const onInvoiceItemsSubmit = (event) => {
+    event.preventDefault();
+
+    //Se validan espacios en blanco a la entrada de datos en el formulario
+    if (productValue.trim().length <= 1) {
+      alert("Error: Se requiere la descripción del producto");
+      return;
+    }
+
+    if (!isNaN(productValue.trim())) {
+      alert("Error: El campo NO es numerico.");
+      return;
+    }
+
+    if (priceValue.trim().length <= 1) return;
+
+    if (isNaN(priceValue.trim())) {
+      alert("Error: No se recibio un valor númerico");
+      return;
+    }
+    if (quantityValue.trim().length < 1) {
+      alert("Error: Se requiere por lo menos un articulo");
+      return;
+    }
+    if (isNaN(quantityValue.trim())) {
+      alert("Error: No se recibio un número");
+      return;
+    }
+
+    setItems([
+      ...items,
+      {
+        id: counter,
+        product: productValue.trim(),
+        price: parseInt(priceValue.trim(), 10),
+        quantity: parseInt(quantityValue.trim(), 10),
+      },
+    ]);
+    setProduct(""), setPrice(""), setQuantity("");
+    setCounter(counter + 1);
+  }
+
 
   return (
     <>
@@ -53,47 +111,7 @@ export const InvoiceApp = () => {
 
             <form
               className="w-50"
-              onSubmit={(event) => {
-                event.preventDefault();
-
-                //Se validan espacios en blanco a la entrada de datos en el formulario
-                if (productValue.trim().length <= 1){
-                  alert('Error: Se requiere la descripción del producto');   
-                  return;
-                } 
-
-                if(!isNaN(productValue.trim())){
-                  alert('Error: El campo NO es numerico.');
-                  return;
-                }
-
-                if (priceValue.trim().length <= 1) return;                  
-
-                if (isNaN(priceValue.trim())) {
-                  alert("Error: No se recibio un valor númerico");
-                  return;
-                }
-                if (quantityValue.trim().length < 1) {
-                  alert("Error: Se requiere por lo menos un articulo");
-                  return;
-                }
-                if (isNaN(quantityValue.trim())) {
-                  alert("Error: No se recibio un número");
-                  return;
-                }
-
-                setItems([
-                  ...items,
-                  {
-                    id: counter,
-                    product: productValue.trim(),
-                    price: parseInt(priceValue.trim(), 10),
-                    quantity: parseInt(quantityValue.trim(), 10),
-                  },
-                ]);
-                setProduct(""), setPrice(""), setQuantity("");
-                setCounter(counter + 1);
-              }}
+              onSubmit={onInvoiceItemsSubmit}
             >
               <input
                 type="text"
@@ -101,10 +119,7 @@ export const InvoiceApp = () => {
                 value={productValue}
                 placeholder="Producto"
                 className="form-control m-3"
-                onChange={(event) => {
-                  console.log(event.target.value);
-                  setProduct(event.target.value);
-                }}
+                onChange={(event) => onProductChange(event)}
               />
 
               <input
@@ -113,10 +128,7 @@ export const InvoiceApp = () => {
                 value={priceValue}
                 placeholder="Precio"
                 className="form-control m-3"
-                onChange={(event) => {
-                  console.log(event.target.value);
-                  setPrice(event.target.value);
-                }}
+                onChange={(event) => onPriceChange(event)}
               />
 
               <input
@@ -125,10 +137,7 @@ export const InvoiceApp = () => {
                 value={quantityValue}
                 placeholder="Cantidad"
                 className="form-control m-3"
-                onChange={(event) => {
-                  console.log(event.target.value);
-                  setQuantity(event.target.value);
-                }}
+                onChange={(event) => onQuantityChange(event)}
               />
               <button type="submit" className="btn btn-primary w-100">
                 Enviar Registro
