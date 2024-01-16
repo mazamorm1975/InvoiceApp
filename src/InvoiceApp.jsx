@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useState } from "react";
 import { getInvoice } from "./services/getInvoice";
 import { ClientView } from "./components/ClienteView";
@@ -16,52 +17,52 @@ export const InvoiceApp = () => {
     items: itemsInitial,
   } = getInvoice();
 
-  const [productValue, setProduct] = useState("");
-  const [priceValue, setPrice] = useState("");
-  const [quantityValue, setQuantity] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [formItemsState, setFormItemsState] = useState({
+    product: "",
+    price: "",
+    quantity: "",
+  });
+
+  const { product, price, quantity } = formItemsState;
+
   const [items, setItems] = useState(itemsInitial);
   const [counter, setCounter] = useState(4);
-  
-  const onProductChange= ({target}) => {
-    console.log(target.value);
-    setProduct(target.value);
-  }
 
-  const onPriceChange = ({target}) => {
-    console.log(target.value);
-    setPrice(target.value);
-  }
-
-  const onQuantityChange = ({target}) => {
-    console.log(target.value);
-    setQuantity(target.value);
-  }
+  const onInputChange = ({ target: { name, value } }) => {
+    console.log(name);
+    console.log(value);
+    setFormItemsState({
+      ...formItemsState,
+      [name]: value
+    });
+  };
 
   const onInvoiceItemsSubmit = (event) => {
     event.preventDefault();
 
     //Se validan espacios en blanco a la entrada de datos en el formulario
-    if (productValue.trim().length <= 1) {
+    if (product.trim().length <= 1) {
       alert("Error: Se requiere la descripción del producto");
       return;
     }
 
-    if (!isNaN(productValue.trim())) {
+    if (!isNaN(product.trim())) {
       alert("Error: El campo NO es numerico.");
       return;
     }
 
-    if (priceValue.trim().length <= 1) return;
+    if (price.trim().length <= 1) return;
 
-    if (isNaN(priceValue.trim())) {
+    if (isNaN(price.trim())) {
       alert("Error: No se recibio un valor númerico");
       return;
     }
-    if (quantityValue.trim().length < 1) {
+    if (quantity.trim().length < 1) {
       alert("Error: Se requiere por lo menos un articulo");
       return;
     }
-    if (isNaN(quantityValue.trim())) {
+    if (isNaN(quantity.trim())) {
       alert("Error: No se recibio un número");
       return;
     }
@@ -70,15 +71,20 @@ export const InvoiceApp = () => {
       ...items,
       {
         id: counter,
-        product: productValue.trim(),
-        price: parseInt(priceValue.trim(), 10),
-        quantity: parseInt(quantityValue.trim(), 10),
+        product: product.trim(),
+        price: parseInt(price.trim(), 10),
+        quantity: parseInt(quantity.trim(), 10),
       },
     ]);
-    setProduct(""), setPrice(""), setQuantity("");
-    setCounter(counter + 1);
-  }
 
+    setFormItemsState({
+      product: "",
+      price: "",
+      quantity: "",
+    });
+
+    setCounter(counter + 1);
+  };
 
   return (
     <>
@@ -109,35 +115,32 @@ export const InvoiceApp = () => {
             <ListItemView title="Productos De la Factura" items={items} />
             <TotalView total={total} />
 
-            <form
-              className="w-50"
-              onSubmit={onInvoiceItemsSubmit}
-            >
+            <form className="w-50" onSubmit={onInvoiceItemsSubmit}>
               <input
                 type="text"
                 name="product"
-                value={productValue}
+                value={product}
                 placeholder="Producto"
                 className="form-control m-3"
-                onChange={(event) => onProductChange(event)}
+                onChange={(event) => onInputChange(event)}
               />
 
               <input
                 type="text m-3"
                 name="price"
-                value={priceValue}
+                value={price}
                 placeholder="Precio"
                 className="form-control m-3"
-                onChange={(event) => onPriceChange(event)}
+                onChange={(event) => onInputChange(event)}
               />
 
               <input
                 type="text"
                 name="quantity"
-                value={quantityValue}
+                value={quantity}
                 placeholder="Cantidad"
                 className="form-control m-3"
-                onChange={(event) => onQuantityChange(event)}
+                onChange={(event) => onInputChange(event)}
               />
               <button type="submit" className="btn btn-primary w-100">
                 Enviar Registro
