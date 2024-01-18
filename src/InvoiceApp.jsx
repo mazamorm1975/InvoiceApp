@@ -28,19 +28,12 @@ const invoiceInitial = {
 };
 
 export const InvoiceApp = () => {
+  //Empieza declaración de los useState
+  const [counter, setCounter] = useState(4);
+
   const [invoice, setInvoice] = useState(invoiceInitial);
 
   const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    const data = getInvoice();
-    console.log(data);
-    setInvoice(data);
-    setItems(data.items);
-  }, []);
-
-  // eslint-disable-next-line no-unused-vars
-  const { total, id, name, client, company, items: itemsInitial } = invoice;
 
   // eslint-disable-next-line no-unused-vars
   const [formItemsState, setFormItemsState] = useState({
@@ -49,9 +42,34 @@ export const InvoiceApp = () => {
     quantity: "",
   });
 
+  const { total, id, name, client, company } = invoice;
+
   const { product, price, quantity } = formItemsState;
 
-  const [counter, setCounter] = useState(4);
+  //Terminan declaraciones de useState
+
+  useEffect(() => {
+    const data = getInvoice();
+    console.log(data);
+    setInvoice(data);
+    setItems(data.items);
+  }, []);
+
+  useEffect(() => {
+    // console.log("Este es el nuevo precio");
+  }, [price]);
+
+  useEffect(() => {
+    // console.log('Se cambia el formulario')
+  }, [formItemsState]);
+
+  useEffect(() => {
+    // console.log('Se cambia el contador')
+  }, [counter]);
+
+  useEffect(() => {
+    console.log("Se cambian los items");
+  }, [items]);
 
   const onInputChange = ({ target: { name, value } }) => {
     // console.log(name);
