@@ -8,10 +8,14 @@ export const getInvoice = () => {
      });
      */
 
-  const total = invoice.items
-    .map((item) => item.price * item.quantity)
-    // eslint-disable-next-line no-undef
-    .reduce((acumulator, currentValue) => acumulator + currentValue, 0);
+  const total = calculateTotal(invoice.items); 
 
   return { ...invoice, total };
 };
+
+export const calculateTotal = (items=[]) => {
+  return items
+    .map((item) => item.price * item.quantity)
+    // eslint-disable-next-line no-undef
+    .reduce((acumulator, currentValue) => acumulator + currentValue, 0);
+}

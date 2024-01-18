@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { useEffect, useState } from "react";
-import { getInvoice } from "./services/getInvoice";
+import { getInvoice, calculateTotal } from "./services/getInvoice";
 import { ClientView } from "./components/ClienteView";
 import { CompanyView } from "./components/CompanyView";
 import { InvoiceView } from "./components/InvoiceView";
@@ -42,7 +42,9 @@ export const InvoiceApp = () => {
     quantity: "",
   });
 
-  const { total, id, name, client, company } = invoice;
+  const [total, setTotal] = useState(0);
+
+  const { id, name, client, company } = invoice;
 
   const { product, price, quantity } = formItemsState;
 
@@ -68,7 +70,8 @@ export const InvoiceApp = () => {
   }, [counter]);
 
   useEffect(() => {
-    console.log("Se cambian los items");
+    //console.log('');
+    setTotal(calculateTotal(items));
   }, [items]);
 
   const onInputChange = ({ target: { name, value } }) => {
